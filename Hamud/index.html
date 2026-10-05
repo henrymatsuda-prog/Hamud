@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hamud Shopping – Protótipo de baixa fidelidade</title>
+<style>
+:root{--bg:#f4f4f2;--card:#fff;--ink:#222;--mut:#777;--line:#999;--fill:#e2e2de;--hi:#ffd84d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1d1c;--card:#272726;--ink:#eee;--mut:#9a9a96;--line:#777;--fill:#383836;--hi:#c9a91f}}
+:root[data-theme="dark"]{--bg:#1d1d1c;--card:#272726;--ink:#eee;--mut:#9a9a96;--line:#777;--fill:#383836;--hi:#c9a91f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:12px}
+.proto{font-size:13px;color:var(--mut);padding:6px 0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.proto button{font-size:13px;padding:3px 9px}
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;border:2px solid var(--line);background:var(--card);padding:10px 14px}
+.logo{font-weight:700;font-size:20px;border:2px solid var(--line);padding:2px 10px;cursor:pointer}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+button{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);padding:8px 14px;cursor:pointer;border-radius:4px}
+button:hover{background:var(--fill)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+button.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.screen{display:none;padding:16px 0}.screen.on{display:block}
+h1{font-size:28px;margin:8px 0 14px}h2{font-size:20px;margin:22px 0 10px}
+.crumb{font-size:14px;color:var(--mut);margin-bottom:10px}
+.crumb a{color:var(--mut);cursor:pointer;text-decoration:underline}
+.hero{border:2px dashed var(--line);padding:28px 16px;text-align:center;background:var(--card)}
+.search{display:flex;gap:8px;max-width:620px;margin:0 auto;flex-wrap:wrap}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);padding:9px 12px;border-radius:4px}
+.search input{flex:1;min-width:200px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;justify-content:center}
+.chip{border:2px solid var(--line);border-radius:20px;padding:5px 14px;background:var(--bg);cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.card{border:2px solid var(--line);background:var(--card);padding:12px;display:flex;flex-direction:column;gap:6px}
+.img{background:var(--fill);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--mut);height:110px;font-size:13px;position:relative;overflow:hidden}
+.img::before,.img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top right,transparent calc(50% - 1px),var(--line) 50%,transparent calc(50% + 1px))}
+.img::after{transform:scaleX(-1)}
+.img span{position:relative;z-index:1;background:var(--fill);padding:0 6px}
+.mut{color:var(--mut);font-size:14px}.price{font-weight:700;font-size:18px}
+.layout{display:grid;grid-template-columns:200px 1fr;gap:14px}
+@media(max-width:700px){.layout,.two{grid-template-columns:1fr!important}}
+.filters{border:2px solid var(--line);background:var(--card);padding:12px;display:flex;flex-direction:column;gap:10px;align-self:start}
+.filters label{font-size:14px;display:flex;flex-direction:column;gap:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.note{border-left:4px solid var(--line);padding:4px 10px;color:var(--mut);font-size:14px;margin-top:12px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:12px 0}
+.stat{border:2px solid var(--line);background:var(--card);padding:12px}.stat b{font-size:28px;display:block}
+.tbl{width:100%;border-collapse:collapse;background:var(--card)}
+.tbl th,.tbl td{border:2px solid var(--line);padding:8px 10px;text-align:left}.tbl th{background:var(--fill)}
+.tag{border:1px solid var(--line);padding:1px 8px;border-radius:10px;font-size:13px}
+.adm{display:grid;grid-template-columns:170px 1fr;gap:14px}
+@media(max-width:700px){.adm{grid-template-columns:1fr}}
+.side{border:2px solid var(--line);background:var(--card);padding:8px;display:flex;flex-direction:column;gap:6px;align-self:start}
+.side div{padding:6px 10px;border:1px solid var(--line)}
+.scroll{overflow-x:auto}
+svg{width:100%;height:auto;background:var(--card);border:2px solid var(--line)}
+svg text{fill:var(--ink);font:13px system-ui,sans-serif}
+.room{fill:var(--fill);stroke:var(--line);stroke-width:2}
+.room.hl{fill:var(--hi);stroke:var(--ink);stroke-width:4}
+.hall{fill:var(--bg)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="proto">Protótipo de baixa fidelidade · dados fictícios · Ir para:
+<button onclick="go('home')">Início</button><button onclick="go('results')">Resultados</button><button onclick="go('product',0)">Produto</button><button onclick="go('store','sport')">Loja</button><button onclick="go('map','sport')">Localização</button><button onclick="go('merchant')">Painel do lojista</button><button onclick="go('admin')">Painel admin</button></div>
+
+<header class="top">
+<div class="logo" onclick="go('home')" role="button" tabindex="0">Hamud Shopping</div>
+<nav><button onclick="go('home')">Início</button><button onclick="go('stores')">Lojas</button><button onclick="go('results')">Produtos</button><button onclick="go('merchant')">Entrar</button></nav>
+</header>
+
+<!-- 1 Início -->
+<section class="screen on" id="home">
+<div class="hero">
+<h1>Encontre o que você procura</h1>
+<div class="search"><input id="q" value="tênis" placeholder="Digite um produto, marca ou categoria" aria-label="Buscar"><button class="pri" onclick="go('results')">Pesquisar</button></div>
+<div class="chips" id="cats"></div>
+</div>
+<h2>Lojas em destaque</h2>
+<div class="grid" id="featured"></div>
+</section>
+
+<!-- 2 Resultados -->
+<section class="screen" id="results">
+<div class="crumb"><a onclick="go('home')">Início</a> › Resultados</div>
+<h1>Resultados para “<span id="rq">tênis</span>”</h1>
+<div class="layout">
+<aside class="filters"><b>Filtros</b>
+<label>Loja<select><option>Todas</option><option>Esporte+</option><option>Moda Center</option></select></label>
+<label>Categoria<select><option>Todas</option><option>Esportes</option><option>Calçados</option></select></label>
+<label>Faixa de preço<select><option>Qualquer</option><option>Até R$ 150</option><option>R$ 150 a R$ 300</option></select></label>
+</aside>
+<div><div class="mut" style="margin-bottom:8px">4 produtos encontrados</div><div class="grid" id="plist"></div></div>
+</div>
+</section>
+
+<!-- 3 Produto -->
+<section class="screen" id="product">
+<div class="crumb"><a onclick="go('home')">Início</a> › <a onclick="go('results')">Resultados</a> › <span id="pc"></span></div>
+<div class="two">
+<div class="img" style="height:300px"><span>Imagem do produto</span></div>
+<div>
+<h1 id="pn" style="margin-top:0"></h1>
+<div class="mut">Marca: <span id="pb"></span></div>
+<p id="pd"></p>
+<div class="price" style="font-size:26px" id="pp"></div>
+<p>Loja: <b id="ps"></b><br>Andar: <b id="pf"></b><br>Número da loja: <b id="pl"></b></p>
+<div class="row"><button class="pri" onclick="go('store',cur.store)">Ver loja</button><button onclick="go('results')">Voltar</button></div>
+<div class="note">Preço e disponibilidade podem variar.</div>
+</div></div>
+</section>
+
+<!-- 4 Loja -->
+<section class="screen" id="store">
+<div class="crumb"><a onclick="go('home')">Início</a> › <a onclick="go('results')">Resultados</a> › <a onclick="go('product',curIdx)">Produto</a> › Loja</div>
+<div class="two">
+<div><div class="img" style="height:140px"><span>Logo da loja</span></div></div>
+<div><h1 id="sn" style="margin-top:0"></h1>
+<p>Categoria: <b id="sc"></b><br><b id="sf"></b> · <b id="sl"></b></p>
+<div class="row"><button class="pri" onclick="go('map',curStore)">Ver localização</button><button onclick="history_back()">Voltar</button></div></div>
+</div>
+<h2>Produtos da loja</h2>
+<div class="grid" id="sprods"></div>
+</section>
+
+<!-- Lojas (menu) -->
+<section class="screen" id="stores">
+<div class="crumb"><a onclick="go('home')">Início</a> › Lojas</div>
+<h1>Lojas</h1><div class="grid" id="alls"></div>
+</section>
+
+<!-- 5 Localização -->
+<section class="screen" id="map">
+<div class="crumb"><a onclick="go('home')">Início</a> › <a onclick="go('store',curStore)">Loja</a> › Localização</div>
+<h1 id="mt"></h1>
+<p class="mut" id="ms"></p>
+<div class="scroll"><svg viewBox="0 0 700 420" role="img" aria-label="Mapa ilustrativo do shopping">
+<rect x="4" y="4" width="692" height="412" fill="none" stroke="var(--line)" stroke-width="3"/>
+<rect class="hall" x="20" y="150" width="660" height="120"/>
+<text x="300" y="215">Corredor central</text>
+<g id="rooms"></g>
+<rect class="room" x="285" y="285" width="130" height="110"/><text x="300" y="345">Praça de alimentação</text>
+<rect class="room" x="20" y="285" width="70" height="110"/><text x="28" y="345">Escadas</text>
+<rect class="room" x="610" y="285" width="70" height="110"/><text x="618" y="345">Escadas</text>
+<text x="330" y="262" style="font-weight:700">▲ Você está aqui</text>
+</svg></div>
+<div class="row"><button onclick="go('store',curStore)">Voltar à loja</button><button onclick="go('home')">Nova pesquisa</button></div>
+<div class="note">Mapa ilustrativo, sem escala real.</div>
+</section>
+
+<!-- 6 Lojista -->
+<section class="screen" id="merchant">
+<div class="crumb"><a onclick="go('home')">Início</a> › Painel do lojista (Esporte+)</div>
+<h1>Painel do lojista</h1>
+<div class="stats"><div class="stat"><b>12</b>Produtos</div><div class="stat"><b>9</b>Produtos ativos</div></div>
+<div class="row"><button class="pri">+ Novo produto</button></div>
+<div class="scroll"><table class="tbl"><tr><th>Produto</th><th>Preço</th><th>Status</th></tr>
+<tr><td>Tênis Esportivo X</td><td>R$ 199,90</td><td><span class="tag">Ativo</span></td></tr>
+<tr><td>Tênis Corrida Pro</td><td>R$ 289,90</td><td><span class="tag">Ativo</span></td></tr>
+<tr><td>Camiseta Dry Fit</td><td>R$ 69,90</td><td><span class="tag">Inativo</span></td></tr>
+<tr><td>Bola de Futsal</td><td>R$ 89,90</td><td><span class="tag">Ativo</span></td></tr></table></div>
+</section>
+
+<!-- 7 Admin -->
+<section class="screen" id="admin">
+<div class="crumb"><a onclick="go('home')">Início</a> › Painel administrativo</div>
+<h1>Painel administrativo</h1>
+<div class="adm">
+<div class="side"><div><b>Lojas</b></div><div>Produtos</div><div>Categorias</div><div>Usuários</div></div>
+<div><div class="stats"><div class="stat"><b>48</b>Lojas</div><div class="stat"><b>1.250</b>Produtos</div><div class="stat"><b>52</b>Lojistas</div></div>
+<div class="scroll"><table class="tbl"><tr><th>Loja</th><th>Andar</th><th>Lojista</th></tr>
+<tr><td>Esporte+</td><td>2º</td><td>Carlos M.</td></tr><tr><td>Moda Center</td><td>1º</td><td>Ana P.</td></tr><tr><td>Tech Store</td><td>3º</td><td>Rafael S.</td></tr><tr><td>Bella Cosméticos</td><td>1º</td><td>Júlia T.</td></tr></table></div></div>
+</div>
+</section>
+</div>
+
+<script>
+var S={sport:{n:"Esporte+",c:"Esportes",f:"2º andar",l:"Loja 204",x:20,y:20,w:150},
+moda:{n:"Moda Center",c:"Moda",f:"1º andar",l:"Loja 112",x:180,y:20,w:150},
+tech:{n:"Tech Store",c:"Eletrônicos",f:"3º andar",l:"Loja 301",x:340,y:20,w:150},
+bella:{n:"Bella Cosméticos",c:"Beleza",f:"1º andar",l:"Loja 105",x:500,y:20,w:180}};
+var P=[{n:"Tênis Esportivo X",b:"Marca X",p:"R$ 199,90",store:"sport",d:"Tênis leve para treino e corrida do dia a dia."},
+{n:"Tênis Casual Urban",b:"Urban",p:"R$ 149,90",store:"moda",d:"Tênis casual para uso diário, vários tamanhos."},
+{n:"Tênis Corrida Pro",b:"Marca X",p:"R$ 289,90",store:"sport",d:"Amortecimento extra para corridas longas."},
+{n:"Tênis Infantil Max",b:"Kids Max",p:"R$ 119,90",store:"moda",d:"Tênis infantil com fecho de velcro."},
+{n:"Camiseta Casual",b:"Moda C.",p:"R$ 59,90",store:"moda",d:"Camiseta de algodão."},
+{n:"Fone Bluetooth",b:"Tech S.",p:"R$ 149,90",store:"tech",d:"Fone sem fio com estojo."},
+{n:"Bolsa Feminina",b:"Moda C.",p:"R$ 129,90",store:"moda",d:"Bolsa de ombro média."}];
+var cur=P[0],curIdx=0,curStore="sport",trail=["home"];
+function $(i){return document.getElementById(i)}
+function card(i){var p=P[i],s=S[p.store];return '<div class="card"><div class="img"><span>Imagem</span></div><b>'+p.n+'</b><div class="price">'+p.p+'</div><div class="mut">Loja '+s.n+' · '+s.f.replace(' andar','º andar').replace('ºº','º')+'</div><button onclick="go(\'product\','+i+')">Ver produto</button></div>'}
+function go(id,arg){
+ if(id==='product'){curIdx=arg;cur=P[arg];curStore=cur.store;
+  $('pc').textContent=cur.n;$('pn').textContent=cur.n;$('pb').textContent=cur.b;$('pd').textContent=cur.d;$('pp').textContent=cur.p;
+  var s=S[cur.store];$('ps').textContent=s.n;$('pf').textContent=s.f;$('pl').textContent=s.l}
+ if(id==='store'){curStore=arg;var s=S[arg];$('sn').textContent=s.n;$('sc').textContent=s.c;$('sf').textContent=s.f;$('sl').textContent=s.l;
+  var h='';P.forEach(function(p,i){if(p.store===arg)h+=card(i)});$('sprods').innerHTML=h}
+ if(id==='map'){curStore=arg;var s=S[arg];$('mt').textContent='Como chegar: '+s.n;$('ms').textContent=s.f+' · '+s.l+' (destacada em amarelo)';
+  var r='';Object.keys(S).forEach(function(k){var t=S[k];r+='<rect class="room'+(k===arg?' hl':'')+'" x="'+t.x+'" y="'+t.y+'" width="'+t.w+'" height="110"/><text x="'+(t.x+10)+'" y="'+(t.y+50)+'">'+t.n+'</text><text x="'+(t.x+10)+'" y="'+(t.y+70)+'">'+t.l+'</text>'});$('rooms').innerHTML=r}
+ if(id==='results'){$('rq').textContent=$('q').value||'tênis'}
+ if(trail[trail.length-1]!==id)trail.push(id);
+ document.querySelectorAll('.screen').forEach(function(e){e.classList.remove('on')});
+ $(id).classList.add('on');window.scrollTo(0,0)}
+function history_back(){go('product',curIdx)}
+$('cats').innerHTML=["Moda","Calçados","Eletrônicos","Beleza","Infantil","Esportes"].map(function(c){return '<span class="chip" onclick="go(\'results\')">'+c+'</span>'}).join('');
+function sc(k){var s=S[k];return '<div class="card"><div class="img"><span>Logo</span></div><b>'+s.n+'</b><div class="mut">'+s.c+' · '+s.f+'</div><button onclick="go(\'store\',\''+k+'\')">Ver loja</button></div>'}
+$('featured').innerHTML=['sport','moda','tech'].map(sc).join('');
+$('alls').innerHTML=Object.keys(S).map(sc).join('');
+$('plist').innerHTML=[0,1,2,3].map(card).join('');
+</script>
+</body>
+</html>
